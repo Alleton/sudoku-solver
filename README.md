@@ -1,7 +1,7 @@
 sudoku-solver
 =============
 
-Java algorithm to solve 16*16 sudokus....
+Java algorithm to solve 9*9 sudokus....
 
 Written during a week end in the countryside with JF Alleton
 
