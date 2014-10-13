@@ -17,3 +17,7 @@ Still a lot of things to do ... :
 * More heuristics ?
 * Scan and OCR solver
 * Definitively Choose between French and English...    
+
+* new version 1.1 13/10/2014
+* Use a file (.sud ) to initialize matrix
+* Use propertie file to choose .sud file
