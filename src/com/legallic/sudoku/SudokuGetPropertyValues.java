@@ -15,8 +15,8 @@ public class SudokuGetPropertyValues {
 		String result = "";
 		Properties prop = new Properties();
 		String propFileName = "Sudoku.properties";
-		
-	InputStream input = null;
+				
+		InputStream input = null;
 		 
 		try {
 	 

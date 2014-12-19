@@ -65,7 +65,7 @@ public class Solver {
 	
 	private boolean solveWithHypothesys() throws SudokuException{
 		System.out.println("");
-		System.out.println("******* Nouvelle hypothèse ******");
+		System.out.println("******* Nouvelle hypothese ******");
 		System.out.println("");
 		Cell cellForHypothesys = null;
 		int lastMinValue = matrix.getMatrixSize();
@@ -84,7 +84,7 @@ public class Solver {
 		}
 
 		int hypothesysValue = firstPossibleValue(cellForHypothesys);
-		System.out.println("Nous allons faire une hypothèse sur la cellule (" + cellForHypothesys.getRowIndex() 
+		System.out.println("Nous allons faire une hypothese sur la cellule (" + cellForHypothesys.getRowIndex() 
 				+ "," + cellForHypothesys.getColIndex() + ") avec la valeur " 
 				+ hypothesysValue
 				);
@@ -101,7 +101,7 @@ public class Solver {
 		}
 		if(!hypothesysSolved){
 			System.out.println("");
-			System.out.println("******* Hypothèse non vérifiée :( ******");
+			System.out.println("******* Hypothese non verifiee :( ******");
 			System.out.println("******* On supprime cette valeur possible et on recommence ! ******");
 			System.out.println("");			
 			//on définit à false la possibilité que cette valeur soit bonne
@@ -109,7 +109,7 @@ public class Solver {
 		}
 		else{
 			System.out.println("");
-			System.out.println("******* Hypothèse vérifiée ! ******");
+			System.out.println("******* Hypothese verifiee ! ******");
 			System.out.println("");					
 			this.matrix = hypothesysMatrix;
 		}
@@ -121,7 +121,7 @@ public class Solver {
 		boolean modified = true;
 		int numberOfPass = 0;
 		
-		// Premiere passe sans hypothèses
+		// Premiere passe sans hypotheses
 		while(modified){
 			modified = false;
 			
@@ -148,7 +148,7 @@ public class Solver {
 			}
 			System.out.println(matrix);
 			
-			System.out.println("- Recherche des valeurs nécessaires");
+			System.out.println("- Recherche des valeurs necessaires");
 			totalFound = 0;
 			for(int rowIndex=0; rowIndex < matrix.getMatrixSize(); rowIndex++){
 				for(int colIndex=0; colIndex < matrix.getMatrixSize(); colIndex++){
@@ -216,34 +216,34 @@ public class Solver {
 			}	
 		}
 		if(modified)
-			System.out.println("La recherche heuristique a permis de réduire le champs des possibles...");
+			System.out.println("La recherche heuristique a permis de reduire le champs des possibles...");
 		else
-			System.out.println("La recherche n'a rien donné...");
+			System.out.println("La recherche n'a rien donnee...");
 		return modified;
 	}
 	
 	/**
-	 * Parcours la zone pour y trouver deux possibilité maximum pour un chiffre
+	 * Parcours la zone pour y trouver deux possibilite maximum pour un chiffre
 	 * @param startCoordinate
 	 * @param endCoordinate
 	 * @return
 	 */
-	private SearchResult searchHeuristic(Coordinate startCoordinate, Coordinate endCoordinate){
+	private  SearchResult searchHeuristic(Coordinate startCoordinate, Coordinate endCoordinate){
 		
 		boolean modified = false;
 		
-		// on boucle sur les chiffres pour trouver deux possibilités
+		// on boucle sur les chiffres pour trouver deux possibilites
 		for (int i = 1; i < matrix.getMatrixSize(); i++) {
-			//System.out.println("Recherche des premières couples pour la valeur " + i);
+			//System.out.println("Recherche des premiers couples pour la valeur " + i);
 			List<Coordinate> firstPossibleSet = computeNumberOfPossible(startCoordinate, endCoordinate, i);
 			
-			// Si on a deux possibilités et que ce sont les mêmes
+			// Si on a deux possibilites et que ce sont les memes
 			if(firstPossibleSet.size() == 2){
-				//System.out.println("Premier couple trouvé : recherche des deuxièmes couples pour la valeur " + i);
+				//System.out.println("Premier couple trouve : recherche des deuxiemes couples pour la valeur " + i);
 				for (int j = i + 1; j <= matrix.getMatrixSize(); j++) {
 					List<Coordinate> secondPossibleSet = computeNumberOfPossible(startCoordinate, endCoordinate, j);
 					if(secondPossibleSet.size() == 2){
-						// Si ce sont les mêmes cases, alors on les tagge
+						// Si ce sont les memes cases, alors on les tagge
 						if(firstPossibleSet.get(0).equals(secondPossibleSet.get(0)) && 
 							firstPossibleSet.get(1).equals(secondPossibleSet.get(1))
 								){
@@ -584,7 +584,7 @@ public class Solver {
 		cell.setDefinitiveValue(value);
 		cell.setFound(true);	
 		unsetPossibleValue(cell);
-		System.out.println(">>>>> Valeur " + value + " trouvée pour la cellule (" + 
+		System.out.println(">>>>> Valeur " + value + " trouvee pour la cellule (" + 
 				cell.getRowIndex() + "," + 
 				cell.getColIndex() + ")");
 	}
