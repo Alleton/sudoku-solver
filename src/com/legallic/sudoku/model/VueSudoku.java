@@ -12,10 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.text.NumberFormat;
 import javax.swing.text.NumberFormatter;
-import javax.swing.text.MaskFormatter;
 
 
 
@@ -24,30 +22,20 @@ public class VueSudoku extends JFrame implements Observer {
 	static final long serialVersionUID = 1;
 	Modele modele;
 	private Matrix matrix;
-	    private int MatSize ;
 	    
 	    public JButton trace = new JButton("trace");
-	    public JButton efface = new JButton("efface");
+	    public JButton go = new JButton("go");
+	    public JButton load = new JButton("load");
 	    // Attributs de la classe
-	    private JPanel      SudokuPanel;
+	    public JPanel      SudokuPanel;
 	    private JPanel      GrillePanel ;
-	    public JLabel		_labVal, _labRes;
-	 	public JTextField	_txtVal, _txtRes;
+	   
 	 	public JCheckBox	_euro, _franc;
 	 	public JButton	_conv;
 	 	NumberFormat numberFormat;
 	 	JTextField [][] allField ; 
+	 	JButton   [][] allButton;
 	 	
-	 	//SudokuPanel.setLayout(new GridBagLayout());
-	 	
-	 	
-	    
-	    //grille.fill = GridBagConstraints ;
-	    //grille.
-	    //c.gridy = 0;
-	    //pane.add(button, c);
-	    //SudokuArdoise ardoise = new SudokuArdoise(9);
-	    
 
 	    public VueSudoku(Modele modele ,Matrix matrix) {
 		this.modele = modele;
@@ -62,12 +50,8 @@ public class VueSudoku extends JFrame implements Observer {
 	    
 		
 		SudokuPanel = new JPanel();
-		Container cont = getContentPane();
-		//cont.setLayout(new GridBagLayout());
-		//GridBagConstraints grille = new GridBagConstraints();
-		 //grille.fill = GridBagConstraints.HORIZONTAL;
-		// grille.gridheight = 9 :
-			 
+		//Container cont = getContentPane();
+
 		//container = new Container(SudokuPanel);
 		
 		
@@ -76,18 +60,12 @@ public class VueSudoku extends JFrame implements Observer {
 		modele.addObserver(this);
 
 		SudokuPanel.add(trace);
-		SudokuPanel.add(efface);
+		SudokuPanel.add(go);
+		SudokuPanel.add(load);
 		add(SudokuPanel, BorderLayout.NORTH);
 		//add(ardoise, BorderLayout.CENTER);
 
 		
-		// Création des JLabels
-		_labVal = new JLabel("Valeur");
-		_labRes = new JLabel("Resultat");
-
-		// Création des JTextField
-		_txtVal = new JTextField();
-		_txtRes = new JTextField();
 
 		// Création des JCheckBox
 		_euro 	= new JCheckBox("Euros");
@@ -105,10 +83,7 @@ public class VueSudoku extends JFrame implements Observer {
 
 		// On ajoute les composants labels, textField et
 		// checkBox au panel haut
-		SudokuPanel.add(_labVal);
-		SudokuPanel.add(_txtVal);
-		SudokuPanel.add(_labRes);
-		SudokuPanel.add(_txtRes);
+
 		SudokuPanel.add(_euro);
 		SudokuPanel.add(_franc);
 		SudokuPanel.add(_conv);
@@ -117,8 +92,9 @@ public class VueSudoku extends JFrame implements Observer {
 				
 				// new panel for grid
 		GrillePanel = new JPanel(new BorderLayout()); //PREFERRED!
-		//Component grille  = new Component;
+
 		GrillePanel.setLayout(new GridLayout(9,9));
+		GrillePanel.setBackground(Color.ORANGE); 
 		add(GrillePanel, BorderLayout.SOUTH);
 		// 
 		// drawRect(int x, int y, int l, int h) ;
@@ -129,22 +105,12 @@ public class VueSudoku extends JFrame implements Observer {
         formatter.setAllowsInvalid(false);
         formatter.setCommitsOnValidEdit(true);//seems to be a no-op --
         
-        //MaskFormatter mf1 = new MaskFormatter("#");
-        
-        //mf1.setPlaceholderCharacter('_');
-        //JTextField ftf1 = new JTextField(mf1);
-        
-        
-        allField = new JTextField [matrix.getMatrixSize()][matrix.getMatrixSize()];
+        allButton = new JButton [matrix.getMatrixSize()][matrix.getMatrixSize()];
         
 		for(int colIndex=0; colIndex < matrix.getMatrixSize(); colIndex++){
 			for(int rowIndex=0; rowIndex < matrix.getMatrixSize(); rowIndex++) {
-				//allField[colIndex][rowIndex].setColumns(1);
-
-				allField[colIndex][rowIndex] = new JTextField (String.valueOf(0));
-				//allField[colIndex][rowIndex].setText(String.valueOf(0)) ;
-				//allField[colIndex][rowIndex].setBounds(150, 350 + i * 25, 20, 20);
-				GrillePanel.add ( allField[colIndex][rowIndex]) ;
+				allButton[colIndex][rowIndex] = new JButton  (String.valueOf(0));
+				GrillePanel.add ( allButton[colIndex][rowIndex]) ;
 			}
 		}
 		
@@ -172,9 +138,9 @@ public class VueSudoku extends JFrame implements Observer {
     	// Mise a jour une  cell de la grille   
     	   Cell cell = matrix.getCells()[colIndex][rowIndex];
 				if(!cell.isFound()){
-					allField[colIndex][rowIndex].setText ( " ") ;
+					allButton[colIndex][rowIndex].setText ( " ") ;
 				} else {
-					allField[colIndex][rowIndex].setText (String.valueOf(cell.getDefinitiveValue())) ;
+					allButton[colIndex][rowIndex].setText (String.valueOf(cell.getDefinitiveValue())) ;
 				}
        }
        
@@ -183,9 +149,8 @@ public class VueSudoku extends JFrame implements Observer {
 	            pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 	        }
 	 
-	        JButton button;
 	    pane.setLayout(new GridBagLayout());
-	    GridBagConstraints c = new GridBagConstraints();
+	    //GridBagConstraints c = new GridBagConstraints();
 	    }
 	    
 	    
@@ -221,16 +186,15 @@ public class VueSudoku extends JFrame implements Observer {
 	    }
 	    
 	    public void update(Observable o, Object arg) {
-		 //ardoise.setPossedeDisque(modele.getExiste());
-		 // ardoise.SetSize(matrix.getMatrixSize()) ;
-		 //ardoise.SetSize( 9) ;
-		//ardoise.repaint();
-	    	//this.rootPane.repaint();
-	    	//this._euro.repaint();
+		 
 	    	this.SudokuPanel.repaint() ;
 	    	this.GrillePanel.repaint();
 	    	
 	    }
 
+	    public void setMatrix ( Matrix matrix) {
+	    	this.matrix = matrix ;
+	    }
+	    
 	}
 

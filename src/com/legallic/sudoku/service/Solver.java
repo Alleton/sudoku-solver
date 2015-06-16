@@ -54,7 +54,7 @@ public class Solver {
 			currentIteration++;
 		}
 		
-		// Know, we can only make hypothesys if still not solved..
+		// Now, we can only make hypothesys if still not solved..
 		if(!isSolved && !solveWithHypothesys()){
 			solve();
 		}
@@ -378,6 +378,19 @@ public class Solver {
 		}
 		return new SearchResult(false, modified);
 	}
+
+	
+	
+	
+	/** 
+	 * searchPossibleValues in alll 3 zones
+	 * @param cell
+	 * @param rowIndex
+	 * @param colIndex
+	 * @return
+	 * @throws SudokuException
+	 */
+	
 	
 	private SearchResult searchPossibleValues(Cell cell, int rowIndex, int colIndex) throws SudokuException{
 		boolean modified=false;
